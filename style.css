@@ -1,8 +1,10 @@
 body {
-    background-color: yellow;
+    background-color: whitesmoke;
     
 }
 
-h1 {
+h1, .btn {
     color: blue;
+    text-align: center;
 }
+

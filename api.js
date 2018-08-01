@@ -1,7 +1,6 @@
 // GET BUTTOM FOR CALLBACK FUNCTION
-document.getElementById("getText").addEventListener("click", getText);
-document.getElementById("getUser").addEventListener("click", getUsers);
-document.getElementById("getPosts").addEventListener("click", getPosts);
+
+document.getElementById("getBit").addEventListener("click", getBits);
 
 // WILL FETCH FILE AND STORE DATA
 // function getText() {
@@ -14,49 +13,32 @@ document.getElementById("getPosts").addEventListener("click", getPosts);
 //     })
 // }
 
-function getText() {
-    fetch('simple.txt')
-    .then((response) => response.text())
-    .then((data) => {
-        document.getElementById('output').innerHTML = data;
-    })
-    .catch((error) => console.log(error));
-}
+// WILL FETCH FILE AND STORE DATA
 
-function getUsers() {
-    fetch('Users.json')
+function getBits() {
+    fetch('https://min-api.cryptocompare.com/data/top/exchanges?fsym=BTC&tsym=USD')
     .then((response) => response.json())
-    .then((data) => {
-        let output = '<h2>User Info</h2>';
-        data.forEach(function(user) {
-            output +=
-            `
-            <ul>
-                <li>ID: ${user.id} </li>
-                <li>Name: ${user.name} </li>
-                <li>Email: ${user.email} </li>
-            </ul>
-            `;
-        });
-        document.getElementById("output").innerHTML = output;
+    .then(function(response) {
+        return response;
     })
-}
-
-
-function getPosts() {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-    .then((response) => response.json())
-    .then((data) => {
-        let output = '<h2>User Info</h2>';
-        data.forEach(function(post) {
-            output +=
+    .then(function(data) {
+        let output = "";
+        let Data =  data.Data;
+        for(i = 0; i < Data.length; i++) {
+            output += 
             `
             <div>
-                <h3>${post.title}</h3>
-                <p>${post.body}</p>
+                <ul>
+                    <li>ID: ${Data[i].exchange}</li>
+                    <li>Symbol: ${Data[i].fromSymbol}</li>
+                    <li>volume: ${Data[i].toSymbol}</li>
+                    <li>volume24h: ${Data[i].volume24h}</li>
+
+                </ul>
             </div>
-            `;
-        });
-        document.getElementById("output").innerHTML = output;
+            `
+        }
+        document.getElementById('output').innerHTML = output;
     })
-}
+    
+    }
